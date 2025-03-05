@@ -10,7 +10,8 @@ run: triathlon_stats-> {
 2. Who has completed the most number of triathlons?
 >>>malloy
 run: triathlon_stats-> {
-    group_by: person_flag
+    group_by: person_name
+    aggregate: Triathlons is count()
 }
 >>>markdown
 3. How many male and female triathletes are there?
