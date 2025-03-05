@@ -1,0 +1,5 @@
+source: triathlon_events is duckdb.table('postgres_public_tristat_events.csv') extend {}
+
+source: triathlon_stats is duckdb.table('postgres_public_tristat_stat.csv') extend {
+
+}

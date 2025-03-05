@@ -1,0 +1,133 @@
+>>>malloy
+import "triathlon.malloy"
+>>>markdown
+1) How many people are in the dataset?
+>>>malloy
+run: triathlon_stats-> {
+    aggregate: total_participants is count()
+}
+>>>markdown
+2. Who has completed the most number of triathlons?
+>>>malloy
+run: triathlon_stats-> {
+    group_by: person_flag
+}
+>>>markdown
+3. How many male and female triathletes are there?
+>>>malloy
+run: triathlon_stats-> {
+    group_by: gender
+    aggregate: total_participants is count()
+}
+>>>markdown
+4. What is the fastest female Ironman time?
+>>>malloy
+run: triathlon_stats-> {
+    group_by: person_event_finish_time_text, person_name
+    where: gender = "F"
+    order_by: person_event_finish_time_text asc
+    limit: 1000000
+}
+>>>markdown
+5. What is the fastest male Ironman time?
+>>>malloy
+run: triathlon_stats-> {
+    group_by: person_event_finish_time_text, person_name
+    where: gender = "M"
+    order_by: person_event_finish_time_text asc
+    limit: 1000000
+}
+>>>markdown
+6. How many participants are in each age group?
+>>>malloy
+run: triathlon_stats -> {
+  group_by: person_event_group
+  aggregate: total_participants is count()
+  order_by: total_participants desc
+}
+>>>markdown
+7. Make a graph depicting the number of participants in each age group
+>>>malloy
+# bar_chart
+run: triathlon_stats -> {
+  group_by: person_event_group
+  aggregate: total_participants is count()
+  order_by: total_participants desc
+  limit: 10
+}
+>>>markdown
+8. How many Ironmans has my uncle completed?
+>>>malloy
+run: triathlon_stats-> {
+    group_by: person_event_finish_time_text, person_name
+    where: person_name = "Drangsholt, Ross"
+    order_by: person_event_finish_time_text asc
+}
+>>>markdown
+9. What is my Mom's Half-Ironman time?
+>>>malloy
+run: triathlon_stats-> {
+    group_by: person_event_finish_time_text, person_name
+    where: person_name = "Kittleman, Erin"
+    order_by: person_event_finish_time_text asc
+}
+>>>markdown
+10. What is Lionel Sanders' fastest Ironman time?
+>>>malloy
+run: triathlon_stats-> {
+    group_by: person_event_finish_time_text, person_name
+    where: person_name = "Sanders, Lionel"
+    order_by: person_event_finish_time_text asc
+}
+>>>markdown
+11. Who is the fastest professional triathlete?
+>>>malloy
+run: triathlon_stats-> {
+    group_by: person_event_finish_time_text, person_name
+    where: person_event_group = "MPRO"
+    order_by: person_event_finish_time_text asc
+    limit: 1000000
+}
+>>>markdown
+12. How many Ironman races have there been?
+>>>malloy
+run: triathlon_events-> {
+   aggregate: event_name is count()
+}
+>>>markdown
+13. Which country has the most triathletes?
+>>>malloy
+run: triathlon_stats-> {
+    group_by: person_flag
+    aggregate: Triathlete_Count is count()
+    order_by: Triathlete_Count desc
+    limit: 10
+}
+>>>markdown
+14. Which country has hosted the most triathlons?
+>>>malloy
+run: triathlon_events-> {
+    group_by: event_flg
+    aggregate: Triathlon_Count is count()
+    order_by: Triathlon_Count desc
+    limit: 10
+}
+>>>markdown
+15. Make a graph depicting the number of triathlon events by country
+>>>malloy
+# bar_chart
+run: triathlon_events-> {
+    group_by: event_flg
+    aggregate: Triathlon_Count is count()
+    order_by: Triathlon_Count desc
+    limit: 10
+}
+>>>markdown
+16. How many Ironman events are held each year?
+>>>malloy
+run: triathlon_events-> {
+    group_by: event_dt.year
+    aggregate: Triathlon_Count is count()
+    order_by: Triathlon_Count desc
+    limit: 10
+}
